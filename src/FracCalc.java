@@ -1,20 +1,23 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.util.*;
+import java.lang.*;
 
 public class FracCalc {
 
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) {
         // TODO: Read the input from the user and call produceAnswer with an equation
 
-        // checkpint 1
+        // CHECKPOINT 1
         /*
         Scanner in = new Scanner(System.in);
         System.out.print("Enter a fraction equation: ");
         String userInput = in.next();
-        System.out.print(produceAnswer1(userInput));
-         */
+        System.out.print(produceAnswer(userInput));
+        */
 
-        // checkpoint 2
+
+        // CHECKPOINT 2
         while (true) {
             Scanner in = new Scanner(System.in);
             System.out.print("Enter a fraction equation (type 'quit' to exit): ");
@@ -24,11 +27,10 @@ public class FracCalc {
                 break;
             }
 
-            String result = produceAnswer2(userInput);
-            System.out.print(result);
+            System.out.print(produceAnswer(userInput));
         }
     }
-    
+
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
     // This function takes a String 'input' and produces the result
     //
@@ -39,8 +41,9 @@ public class FracCalc {
     //      e.g. return ==> "1_1/4"
 
 
-    // checkpoint 1
-    public static String produceAnswer1(String input)
+    // CHECKPOINT 1
+    /*
+    public static String produceAnswer(String input)
     {
         // TODO: Implement this function to produce the solution to the input
 
@@ -55,9 +58,11 @@ public class FracCalc {
         }
         return secondFrac;
     }
+     */
 
-    // checkpoint 2
-    public static String produceAnswer2(String input)
+
+    // CHECKPOINT 2
+    public static String produceAnswer(String input)
     { 
         // TODO: Implement this function to produce the solution to the input
         Scanner in = new Scanner(input);
@@ -71,24 +76,42 @@ public class FracCalc {
         }
         System.out.print(secondFrac);
 
-        String whole = "error";
-        String fraction = "error";
-        String numerator = "error";
-        String denominator = "error";
+        String whole = "";
+        String fraction = "";
+        String numerator = "";
+        String denominator = "";
 
         Scanner in2 = new Scanner(secondFrac);
         in2.useDelimiter("_");
         if (in2.hasNext()) {
-            whole = in2.next();
-            fraction = in2.next();
+            if ( input.contains("_") ) {
+                whole = in2.next();
+                fraction = in2.next();
+
+                Scanner in3 = new Scanner(fraction);
+                in3.useDelimiter("/");
+                numerator = in3.next();
+                denominator = in3.next();
+            }
+            else if ( input.contains("/") == false ) {
+                whole = in2.next();
+                numerator = "0";
+                denominator = "1";
+            }
+            else {
+                whole = "0";
+                fraction = in2.next();
+                Scanner in3 = new Scanner(fraction);
+                in3.useDelimiter("/");
+                numerator = in3.next();
+                denominator = in3.next();
+            }
         }
 
-        Scanner in3 = new Scanner(fraction);
-        in3.useDelimiter("/");
-        if (in3.hasNext()) {
-            numerator = in3.next();
-            denominator = in3.next();
+        else {
+            throw new InputMismatchException("No input");
         }
+
 
         String result = "whole:" + whole + " numerator:" + numerator + " denominator:" + denominator;
 
@@ -96,5 +119,4 @@ public class FracCalc {
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
-    
 }
