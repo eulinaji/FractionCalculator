@@ -29,6 +29,7 @@ public class FracCalc {
 
             System.out.print(produceAnswer(userInput));
         }
+
     }
 
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
@@ -84,7 +85,7 @@ public class FracCalc {
         Scanner in2 = new Scanner(secondFrac);
         in2.useDelimiter("_");
         if (in2.hasNext()) {
-            if ( input.contains("_") ) {
+            if ( secondFrac.contains("_") ) {
                 whole = in2.next();
                 fraction = in2.next();
 
@@ -93,7 +94,7 @@ public class FracCalc {
                 numerator = in3.next();
                 denominator = in3.next();
             }
-            else if ( input.contains("/") == false ) {
+            else if ( secondFrac.contains("/") == false ) {
                 whole = in2.next();
                 numerator = "0";
                 denominator = "1";
