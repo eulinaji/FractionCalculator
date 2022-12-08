@@ -8,17 +8,6 @@ public class FracCalc {
     public static void main(String[] args) {
         // TODO: Read the input from the user and call produceAnswer with an equation
 
-        // CHECKPOINT 1
-        /*
-        Scanner in = new Scanner(System.in);
-        System.out.print("Enter a fraction equation: ");
-        String userInput = in.next();
-        System.out.print(produceAnswer(userInput));
-        */
-
-
-        // CHECKPOINT 2
-
         String userInput;
 
         while (true) {
@@ -34,98 +23,14 @@ public class FracCalc {
 
     }
 
-    // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
-    // This function takes a String 'input' and produces the result
-    //
-    // input is a fraction string that needs to be evaluated.  For your program, this will be the user input.
-    //      e.g. input ==> "1/2 + 3/4"
-    //        
-    // The function should return the result of the fraction after it has been calculated
-    //      e.g. return ==> "1_1/4"
 
-
-    // CHECKPOINT 1
-    /*
-    public static String produceAnswer(String input)
-    {
         // TODO: Implement this function to produce the solution to the input
 
-        Scanner in = new Scanner(input);
-        in.useDelimiter(" ");
-
-        String secondFrac = "error";
-        if (in.hasNext()) {
-            String firstFrac = in.next();
-            String operator = in.next();
-            secondFrac = in.next();
-        }
-        return secondFrac;
-    }
-     */
-
-
-    // CHECKPOINT 2
-    /*
-    public static String produceAnswer(String input)
-    { 
-        // TODO: Implement this function to produce the solution to the input
-        Scanner in = new Scanner(input);
-        in.useDelimiter(" ");
-
-        String secondFrac = "error";
-        if (in.hasNext()) {
-            String firstFrac = in.next();
-            String operator = in.next();
-            secondFrac = in.next();
-        }
-        System.out.print(secondFrac);
-
-        String whole = "";
-        String fraction = "";
-        String numerator = "";
-        String denominator = "";
-
-        Scanner in2 = new Scanner(secondFrac);
-        in2.useDelimiter("_");
-        if (in2.hasNext()) {
-            if ( secondFrac.contains("_") ) {
-                whole = in2.next();
-                fraction = in2.next();
-
-                Scanner in3 = new Scanner(fraction);
-                in3.useDelimiter("/");
-                numerator = in3.next();
-                denominator = in3.next();
-            }
-            else if ( secondFrac.contains("/") == false ) {
-                whole = in2.next();
-                numerator = "0";
-                denominator = "1";
-            }
-            else {
-                whole = "0";
-                fraction = in2.next();
-                Scanner in3 = new Scanner(fraction);
-                in3.useDelimiter("/");
-                numerator = in3.next();
-                denominator = in3.next();
-            }
-        }
-
-        else {
-            throw new InputMismatchException("No input");
-        }
-
-
-        String result = "whole:" + whole + " numerator:" + numerator + " denominator:" + denominator;
-
-        return result;
-    }
-    */
-
-
-    // TODO: Fill in the space below with any helper methods that you think you will need
-
+        /**
+         * method that gets an equation, calls splitEquation(), determines which operator to use
+         * @param input user's inputted equation
+         * @return finalFraction final, simplified answer
+         */
         public static String produceAnswer(String input) {
             String finalFraction = " ";
 
@@ -150,6 +55,13 @@ public class FracCalc {
         }
 
 
+        // TODO: Fill in the space below with any helper methods that you think you will need
+
+        /**
+         * method that gets an equation, and splits it into parts
+         * @param input user's inputted equation
+         * @return result array with operator, first fraction, second fraction
+         */
         public static String[] splitEquation (String input) {
         Scanner in = new Scanner(input);
         in.useDelimiter(" ");
@@ -168,7 +80,11 @@ public class FracCalc {
     }
 
 
-
+    /**
+     * method that gets a fraction, and splits it into parts
+     * @param fraction fraction from user's equation
+     * @return result array with whole number, numerator, denominator
+     */
     public static String[] getFractionParts (String fraction) {
         String whole = "";
         String frac = "";
@@ -211,6 +127,9 @@ public class FracCalc {
     }
 
 
+    /**
+     * @return greatest common denominator
+     */
     public static int GCD(int a, int b){
         if (b==0) return a;
         return GCD(b,a%b);
@@ -218,9 +137,10 @@ public class FracCalc {
 
 
     /**
+     * method that reduces the fraction answer into simplified form
      * @param improperNumer numerator after calculations
      * @param improperDenom denominator after calculations
-     * @return
+     * @return simpleAnswer simplified (mixed) answer
      */
     public static String simplifyFractions(int improperNumer, int improperDenom) {
         int n = improperNumer;
@@ -259,6 +179,13 @@ public class FracCalc {
         return simpleAnswer;
     }
 
+
+    /**
+     * method that takes two fractions and adds them together
+     * @param frac1 first fraction of equation
+     * @param frac2 second fraction of equation
+     * @return finalAnswer unsimplified answer after addition
+     */
     public static String addFractions(String frac1, String frac2) {
         String[] parts1 = getFractionParts(frac1);
         int w1 = Integer.parseInt(parts1[0]);
@@ -283,10 +210,16 @@ public class FracCalc {
 
         String finalAnswer = simplifyFractions(n,d);
 
-        //String finalAnswer = n + "/" + d;
         return finalAnswer;
     }
 
+
+    /**
+     * method that takes two fractions and subtracts one from the other
+     * @param frac1 first fraction of equation
+     * @param frac2 second fraction of equation
+     * @return finalAnswer unsimplified answer after subtraction
+     */
     public static String subtractFractions(String frac1, String frac2) {
         String[] parts1 = getFractionParts(frac1);
         int w1 = Integer.parseInt(parts1[0]);
@@ -310,10 +243,16 @@ public class FracCalc {
 
         String finalAnswer = simplifyFractions(n,d);
 
-        //String finalAnswer = n + "/" + d;
         return finalAnswer;
     }
 
+
+    /**
+     * method that takes two fractions and multiplies them together
+     * @param frac1 first fraction of equation
+     * @param frac2 second fraction of equation
+     * @return finalAnswer unsimplified answer after multiplication
+     */
     public static String multiplyFractions(String frac1, String frac2) {
         String[] parts1 = getFractionParts(frac1);
         int w1 = Integer.parseInt(parts1[0]);
@@ -337,10 +276,16 @@ public class FracCalc {
 
         String finalAnswer = simplifyFractions(n,d);
 
-        //String finalAnswer = n + "/" + d;
         return finalAnswer;
     }
 
+
+    /**
+     * method that takes two fractions and divides one from the other
+     * @param frac1 first fraction of equation
+     * @param frac2 second fraction of equation
+     * @return finalAnswer unsimplified answer after division
+     */
     public static String divideFractions(String frac1, String frac2) {
         String[] parts1 = getFractionParts(frac1);
         int w1 = Integer.parseInt(parts1[0]);
@@ -364,7 +309,6 @@ public class FracCalc {
 
         String finalAnswer = simplifyFractions(n,d);
 
-        //String finalAnswer = n + "/" + d;
         return finalAnswer;
     }
 
