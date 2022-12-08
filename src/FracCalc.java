@@ -29,28 +29,9 @@ public class FracCalc {
             if (userInput == "quit") {
                 break;
             }
-            // System.out.print(produceAnswer(userInput));
+            System.out.print(produceAnswer(userInput));
         }
 
-        String finalFraction = " ";
-
-        String[] equationParts;
-        equationParts = splitEquation(userInput);
-
-        if (equationParts[0] == "+") {
-            finalFraction = addFractions(equationParts[1], equationParts[2]);
-        }
-        else if (equationParts[0] == "-") {
-            finalFraction = subtractFractions(equationParts[1], equationParts[2]);
-        }
-        else if (equationParts[0] == "*") {
-            finalFraction = multiplyFractions(equationParts[1], equationParts[2]);
-        }
-        else if (equationParts[0] == "/") {
-            finalFraction = divideFractions(equationParts[1], equationParts[2]);
-        }
-
-        System.out.print(finalFraction);
     }
 
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
@@ -145,8 +126,31 @@ public class FracCalc {
 
     // TODO: Fill in the space below with any helper methods that you think you will need
 
+        public static String produceAnswer(String input) {
+            String finalFraction = " ";
 
-    public static String[] splitEquation (String input) {
+            String[] equationParts;
+            equationParts = splitEquation(input);
+
+            if (equationParts[0].equals("+")) {
+                finalFraction = addFractions(equationParts[1], equationParts[2]);
+            }
+            else if (equationParts[0].equals("-")) {
+                finalFraction = subtractFractions(equationParts[1], equationParts[2]);
+            }
+            else if (equationParts[0].equals("*")) {
+                finalFraction = multiplyFractions(equationParts[1], equationParts[2]);
+            }
+            else if (equationParts[0].equals("/")) {
+                finalFraction = divideFractions(equationParts[1], equationParts[2]);
+            }
+
+            System.out.print(finalFraction);
+            return finalFraction;
+        }
+
+
+        public static String[] splitEquation (String input) {
         Scanner in = new Scanner(input);
         in.useDelimiter(" ");
 
@@ -178,7 +182,7 @@ public class FracCalc {
                 whole = in.next();
                 frac = in.next();
 
-                Scanner in1 = new Scanner(fraction);
+                Scanner in1 = new Scanner(frac);
                 in1.useDelimiter("/");
                 numerator = in1.next();
                 denominator = in1.next();
@@ -206,11 +210,29 @@ public class FracCalc {
         return result;
     }
 
-
+    /**
+     * @param improperNumer numerator after calculations
+     * @param improperDenom denominator after calculations
+     * @return
+     */
     public static String simplifyFractions(int improperNumer, int improperDenom) {
+        int n = improperNumer;
+        int d = improperDenom;
+        int w;
+
+        w = n/d;
+        n = n&d;
 
 
         String simpleAnswer = "";
+
+        if (w == 0) {
+            simpleAnswer =  n + "/" + d;
+        }
+        else {
+            simpleAnswer = w + "_" + n + "/" + d;
+        }
+
         return simpleAnswer;    // "4_5/8"
     }
 
@@ -225,25 +247,97 @@ public class FracCalc {
         int n2 = Integer.parseInt(parts2[1]);
         int d2 = Integer.parseInt(parts2[2]);
 
+        // handles negative numbers
+        if (w1 < 0) {
+            n1 = -n1;
+        }
+        if (w2 < 0) {
+            n2 = -n2;
+        }
 
         int n = (w1 * d1 + n1) * d2 + (w2 * d2 + n2) * d1;
         int d = d1 * d2;
 
-        String finalAnswer = simplifyFractions(n,d);
+        //String finalAnswer = simplifyFractions(n,d);
 
+        String finalAnswer = n + "/" + d;
         return finalAnswer;
     }
 
     public static String subtractFractions(String frac1, String frac2) {
+        String[] parts1 = getFractionParts(frac1);
+        int w1 = Integer.parseInt(parts1[0]);
+        int n1 = Integer.parseInt(parts1[1]);
+        int d1 = Integer.parseInt(parts1[2]);
+
+        String[] parts2 = getFractionParts(frac2);
+        int w2 = Integer.parseInt(parts2[0]);
+        int n2 = Integer.parseInt(parts2[1]);
+        int d2 = Integer.parseInt(parts2[2]);
+
+        if (w1 < 0) {
+            n1 = -n1;
+        }
+        if (w2 < 0) {
+            n2 = -n2;
+        }
+
+        int n = (w1 * d1 + n1) * d2 - (w2 * d2 + n2) * d1;
+        int d = d1 * d2;
+
+        String finalAnswer = n + "/" + d;
+        return finalAnswer;
 
     }
 
     public static String multiplyFractions(String frac1, String frac2) {
+        String[] parts1 = getFractionParts(frac1);
+        int w1 = Integer.parseInt(parts1[0]);
+        int n1 = Integer.parseInt(parts1[1]);
+        int d1 = Integer.parseInt(parts1[2]);
 
+        String[] parts2 = getFractionParts(frac2);
+        int w2 = Integer.parseInt(parts2[0]);
+        int n2 = Integer.parseInt(parts2[1]);
+        int d2 = Integer.parseInt(parts2[2]);
+
+        if (w1 < 0) {
+            n1 = -n1;
+        }
+        if (w2 < 0) {
+            n2 = -n2;
+        }
+
+        int n = (w1 * d1 + n1) * (w2 * d2 + n2);
+        int d = d1 * d2;
+
+        String finalAnswer = n + "/" + d;
+        return finalAnswer;
     }
 
     public static String divideFractions(String frac1, String frac2) {
+        String[] parts1 = getFractionParts(frac1);
+        int w1 = Integer.parseInt(parts1[0]);
+        int n1 = Integer.parseInt(parts1[1]);
+        int d1 = Integer.parseInt(parts1[2]);
 
+        String[] parts2 = getFractionParts(frac2);
+        int w2 = Integer.parseInt(parts2[0]);
+        int n2 = Integer.parseInt(parts2[1]);
+        int d2 = Integer.parseInt(parts2[2]);
+
+        if (w1 < 0) {
+            n1 = -n1;
+        }
+        if (w2 < 0) {
+            n2 = -n2;
+        }
+
+        int n = (w1 * d1 + n1) * d2;
+        int d = d1 * (w2 * d2 + n2);
+
+        String finalAnswer = n + "/" + d;
+        return finalAnswer;
     }
 
 
