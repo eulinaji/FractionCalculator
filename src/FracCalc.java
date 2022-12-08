@@ -210,6 +210,13 @@ public class FracCalc {
         return result;
     }
 
+
+    public static int GCD(int a, int b){
+        if (b==0) return a;
+        return GCD(b,a%b);
+    }
+
+
     /**
      * @param improperNumer numerator after calculations
      * @param improperDenom denominator after calculations
@@ -221,19 +228,35 @@ public class FracCalc {
         int w;
 
         w = n/d;
-        n = n&d;
+        n = n%d;
 
+        if (w < 0) {
+            n = -n;
+        }
+
+        int gcd = GCD(n,d);
+
+        n = n / gcd;
+        d = d / gcd;
 
         String simpleAnswer = "";
 
         if (w == 0) {
-            simpleAnswer =  n + "/" + d;
+            if (n == 0) {
+                simpleAnswer = "0";
+            }
+            else {
+                simpleAnswer =  n + "/" + d;
+            }
+        }
+        else if (n%d == 0) {
+            simpleAnswer = "" + w;
         }
         else {
             simpleAnswer = w + "_" + n + "/" + d;
         }
 
-        return simpleAnswer;    // "4_5/8"
+        return simpleAnswer;
     }
 
     public static String addFractions(String frac1, String frac2) {
@@ -258,9 +281,9 @@ public class FracCalc {
         int n = (w1 * d1 + n1) * d2 + (w2 * d2 + n2) * d1;
         int d = d1 * d2;
 
-        //String finalAnswer = simplifyFractions(n,d);
+        String finalAnswer = simplifyFractions(n,d);
 
-        String finalAnswer = n + "/" + d;
+        //String finalAnswer = n + "/" + d;
         return finalAnswer;
     }
 
@@ -285,9 +308,10 @@ public class FracCalc {
         int n = (w1 * d1 + n1) * d2 - (w2 * d2 + n2) * d1;
         int d = d1 * d2;
 
-        String finalAnswer = n + "/" + d;
-        return finalAnswer;
+        String finalAnswer = simplifyFractions(n,d);
 
+        //String finalAnswer = n + "/" + d;
+        return finalAnswer;
     }
 
     public static String multiplyFractions(String frac1, String frac2) {
@@ -311,7 +335,9 @@ public class FracCalc {
         int n = (w1 * d1 + n1) * (w2 * d2 + n2);
         int d = d1 * d2;
 
-        String finalAnswer = n + "/" + d;
+        String finalAnswer = simplifyFractions(n,d);
+
+        //String finalAnswer = n + "/" + d;
         return finalAnswer;
     }
 
@@ -336,7 +362,9 @@ public class FracCalc {
         int n = (w1 * d1 + n1) * d2;
         int d = d1 * (w2 * d2 + n2);
 
-        String finalAnswer = n + "/" + d;
+        String finalAnswer = simplifyFractions(n,d);
+
+        //String finalAnswer = n + "/" + d;
         return finalAnswer;
     }
 
